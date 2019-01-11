@@ -1,0 +1,7 @@
+runmode: release # 开发模式, debug, release, test
+port: :8886
+db:
+  name: qiyue_api_server
+  addr: 127.0.0.1:3306
+  username: root
+  password: 1234

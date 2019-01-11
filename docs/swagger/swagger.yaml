@@ -1,0 +1,567 @@
+definitions:
+  book.AddShortCommentBody:
+    properties:
+      book_id:
+        type: integer
+      content:
+        type: string
+    required:
+    - book_id
+    - content
+    type: object
+  handler.Response:
+    properties:
+      error_code:
+        type: integer
+      error_message:
+        type: string
+      msg:
+        type: object
+      request:
+        type: string
+    type: object
+  like.LikeBody:
+    properties:
+      art_id:
+        type: integer
+      type:
+        type: integer
+    required:
+    - art_id
+    - type
+    type: object
+  model.BookSerializer:
+    properties:
+      author:
+        type: string
+      fav_nums:
+        type: integer
+      id:
+        type: integer
+      image:
+        type: string
+      like_status:
+        type: integer
+      title:
+        type: string
+    type: object
+  model.ClassicSerializer:
+    properties:
+      content:
+        type: string
+      fav_nums:
+        type: integer
+      id:
+        type: integer
+      image:
+        type: string
+      index:
+        type: integer
+      like_status:
+        type: integer
+      pubdate:
+        type: string
+      title:
+        type: string
+      type:
+        type: integer
+      url:
+        type: string
+    type: object
+  model.User:
+    properties:
+      id:
+        type: integer
+      key:
+        type: string
+      name:
+        type: string
+    type: object
+  user.UserBody:
+    properties:
+      username:
+        type: string
+    required:
+    - username
+    type: object
+info:
+  contact: {}
+  license: {}
+paths:
+  /v1/book/add/short_comment:
+    post:
+      consumes:
+      - application/json
+      description: 新增短评
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 短评信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/book.AddShortCommentBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 新增短评
+      tags:
+      - Book
+  /v1/book/detail/{isbn}:
+    get:
+      consumes:
+      - application/json
+      description: 通过 isbn 获取书籍详细信息
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 书籍的 isbn 号
+        in: path
+        name: isbn
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 通过 isbn 获取书籍详细信息
+      tags:
+      - Book
+  /v1/book/favor/{book_id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取书籍点赞情况
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 书籍 id
+        in: path
+        name: book_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 获取书籍点赞情况
+      tags:
+      - Book
+  /v1/book/favor_count:
+    get:
+      consumes:
+      - application/json
+      description: 获取喜欢书籍数量
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 获取喜欢书籍数量
+      tags:
+      - Book
+  /v1/book/hot_keyword:
+    get:
+      consumes:
+      - application/json
+      description: 获取热搜关键字
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 获取热搜关键字
+      tags:
+      - Book
+  /v1/book/hot_list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.BookSerializer'
+            type: array
+      summary: 获取热门书籍(概要)
+      tags:
+      - Book
+  /v1/book/search:
+    get:
+      consumes:
+      - application/json
+      description: 书籍搜索
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 搜索内容,比如你想搜索python相关书籍,则输入python
+        in: query
+        name: q
+        required: true
+        type: string
+      - description: 返回完整或简介,默认为0,0为完整内容,1为简介
+        in: query
+        name: summary
+        type: string
+      - description: 开始记录数，默认为0
+        in: query
+        name: start
+        type: string
+      - description: 记录条数，默认为20,超过依然按照20条计算
+        in: query
+        name: count
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 书籍搜索
+      tags:
+      - Book
+  /v1/book/short_comment/{book_id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取书籍短评
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 书籍 id
+        in: path
+        name: book_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 获取书籍短评
+      tags:
+      - Book
+  /v1/classic/detail/{type}/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取某一期详细信息
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 期刊的类型 100 200 300
+        in: path
+        name: type
+        required: true
+        type: integer
+      - description: 当前期刊的 id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ClassicSerializer'
+            type: object
+      summary: 获取某一期详细信息
+      tags:
+      - Classic
+  /v1/classic/favor:
+    get:
+      consumes:
+      - application/json
+      description: 获取我喜欢的期刊
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.ClassicSerializer'
+            type: array
+      summary: 获取我喜欢的期刊
+      tags:
+      - Classic
+  /v1/classic/favor/{type}/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取点赞信息
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 期刊的类型 100 200 300
+        in: path
+        name: type
+        required: true
+        type: integer
+      - description: 当前期刊的 id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 获取点赞信息
+      tags:
+      - Classic
+  /v1/classic/latest:
+    get:
+      consumes:
+      - application/json
+      description: 获取最新一期期刊
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ClassicSerializer'
+            type: object
+      summary: 获取最新一期期刊
+      tags:
+      - Classic
+  /v1/classic/next/{index}:
+    get:
+      consumes:
+      - application/json
+      description: 获取当前一期的下一期期刊
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 当前期刊的 index
+        in: path
+        name: index
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ClassicSerializer'
+            type: object
+      summary: 获取当前一期的下一期期刊
+      tags:
+      - Classic
+  /v1/classic/previous/{index}:
+    get:
+      consumes:
+      - application/json
+      description: 获取当前一期的上一期期刊
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 当前期刊的 index
+        in: path
+        name: index
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ClassicSerializer'
+            type: object
+      summary: 获取当前一期的上一期期刊
+      tags:
+      - Classic
+  /v1/like:
+    post:
+      consumes:
+      - application/json
+      description: 进行点赞
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 点赞的信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/like.LikeBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 进行点赞
+      tags:
+      - Like
+  /v1/like/cancel:
+    post:
+      consumes:
+      - application/json
+      description: 取消点赞
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 取消点赞的信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/like.LikeBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 取消点赞
+      tags:
+      - Like
+  /v1/user:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有用户
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
+      summary: 获取所有用户
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: 注册
+      parameters:
+      - description: 用户名
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/user.UserBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 注册
+      tags:
+      - User
+swagger: "2.0"
