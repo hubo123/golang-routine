@@ -2,12 +2,12 @@ package book
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/Away0x/7yue_api_server/handler"
-	"github.com/Away0x/7yue_api_server/utils/validate"
-	"github.com/Away0x/7yue_api_server/constant/errno"
-	"github.com/Away0x/7yue_api_server/model"
-	"github.com/Away0x/7yue_api_server/constant"
-	"github.com/Away0x/7yue_api_server/crawler"
+	"jiudao/constant"
+	"jiudao/constant/errno"
+	"jiudao/crawler"
+	"jiudao/handler"
+	"jiudao/model"
+	"jiudao/utils/validate"
 )
 
 // @Summary 获取热门书籍(概要)
@@ -52,7 +52,6 @@ func HotList(c *gin.Context) {
 		result[index] = book.Serializer(like_status, all_user_favor_nums_map[book.BookId])
 	}
 
-
 	// 3. 响应数据
 	handler.SendResponse(c, nil, result)
 }
@@ -93,7 +92,7 @@ func FavorCount(c *gin.Context) {
 // @Router /v1/book/favor/{book_id} [get]
 func FavorStatus(c *gin.Context) {
 	// 1. 参数验证
-	id, err := validate.NumberParamsValidate(c,"book_id")
+	id, err := validate.NumberParamsValidate(c, "book_id")
 	if err != nil {
 		handler.SendResponse(c, err, nil)
 		return
@@ -106,8 +105,8 @@ func FavorStatus(c *gin.Context) {
 
 	// 3. 响应数据
 	handler.SendResponse(c, nil, gin.H{
-		"fav_nums": len(favors),
-		"id": id,
+		"fav_nums":    len(favors),
+		"id":          id,
 		"like_status": is_favor,
 	})
 }
@@ -167,7 +166,6 @@ func AddShortComment(c *gin.Context) {
 		}
 	}
 
-
 	// 2. 响应数据
 	handler.SendResponse(c, nil, "ok")
 }
@@ -183,7 +181,7 @@ func AddShortComment(c *gin.Context) {
 // @Router /v1/book/short_comment/{book_id} [get]
 func ShortComment(c *gin.Context) {
 	// 1. 参数验证
-	id, err := validate.NumberParamsValidate(c,"book_id")
+	id, err := validate.NumberParamsValidate(c, "book_id")
 	if err != nil {
 		handler.SendResponse(c, err, nil)
 		return
@@ -193,8 +191,8 @@ func ShortComment(c *gin.Context) {
 	comments, _ := model.GetThisBookAllComments(id)
 
 	// 2. 响应数据
-	handler.SendResponse(c,nil, gin.H{
-		"book_id": id,
+	handler.SendResponse(c, nil, gin.H{
+		"book_id":  id,
 		"comments": comments,
 	})
 }
@@ -216,7 +214,7 @@ func Search(c *gin.Context) {
 	start := c.DefaultQuery("start", "0")     // 开始记录数，默认为 0
 	count := c.DefaultQuery("count", "20")    // 记录条数，默认为 20，超过依然按照 20 条计算
 	summary := c.DefaultQuery("summary", "0") // 返回完整或简介,默认为 0，0 为完整内容，1 为简介
-	q := c.Query("q")                                     // 搜索内容，比如你想搜索 python 相关书籍，则输入 python
+	q := c.Query("q")                         // 搜索内容，比如你想搜索 python 相关书籍，则输入 python
 
 	// 2. 调用 api
 	res := crawler.SearchBooks(summary, q, start, count)

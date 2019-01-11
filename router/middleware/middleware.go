@@ -2,9 +2,9 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/Away0x/7yue_api_server/model"
-	"github.com/Away0x/7yue_api_server/constant/errno"
-	"github.com/Away0x/7yue_api_server/handler"
+	"jiudao/model"
+	"jiudao/constant/errno"
+	"jiudao/handler"
 )
 
 // 跨域

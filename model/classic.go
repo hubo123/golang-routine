@@ -1,8 +1,8 @@
 package model
 
 import (
-	"github.com/Away0x/7yue_api_server/constant"
-	"github.com/Away0x/7yue_api_server/constant/errno"
+	"jiudao/constant"
+	"jiudao/constant/errno"
 	"github.com/jinzhu/gorm"
 )
 

@@ -2,7 +2,7 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/Away0x/7yue_api_server/constant/errno"
+	"jiudao/constant/errno"
 )
 
 type Favor struct {

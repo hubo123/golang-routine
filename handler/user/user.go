@@ -2,11 +2,11 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
-	"github.com/Away0x/7yue_api_server/handler"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/Away0x/7yue_api_server/model"
-	"github.com/Away0x/7yue_api_server/constant/errno"
+	"jiudao/constant/errno"
+	"jiudao/handler"
+	"jiudao/model"
+	"net/http"
 )
 
 // 首页
@@ -49,8 +49,8 @@ func Register(c *gin.Context) {
 	// 3. 响应数据
 	handler.SendResponse(c, nil, gin.H{
 		"name": user.Name,
-		"id": user.ID,
-		"key": user.Key,
+		"id":   user.ID,
+		"key":  user.Key,
 	})
 }
 

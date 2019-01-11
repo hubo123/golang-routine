@@ -2,9 +2,9 @@ package like
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/Away0x/7yue_api_server/handler"
-		"github.com/Away0x/7yue_api_server/constant/errno"
-	"github.com/Away0x/7yue_api_server/model"
+	"jiudao/constant/errno"
+	"jiudao/handler"
+	"jiudao/model"
 )
 
 // @Summary 进行点赞

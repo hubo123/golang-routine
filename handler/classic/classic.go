@@ -2,12 +2,12 @@ package classic
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/Away0x/7yue_api_server/handler"
-	"github.com/Away0x/7yue_api_server/constant/errno"
-	"github.com/Away0x/7yue_api_server/utils"
-	"github.com/Away0x/7yue_api_server/model"
-	"github.com/Away0x/7yue_api_server/utils/validate"
-	"github.com/Away0x/7yue_api_server/constant"
+	"jiudao/handler"
+	"jiudao/constant/errno"
+	"jiudao/utils"
+	"jiudao/model"
+	"jiudao/utils/validate"
+	"jiudao/constant"
 )
 
 // @Summary 获取最新一期期刊

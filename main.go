@@ -2,13 +2,13 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/Away0x/7yue_api_server/router"
+	"jiudao/router"
 	"log"
 	"net/http"
-	"github.com/Away0x/7yue_api_server/model"
+	"jiudao/model"
 	"github.com/spf13/viper"
-	"github.com/Away0x/7yue_api_server/mock"
-	"github.com/Away0x/7yue_api_server/config"
+	"jiudao/mock"
+	"jiudao/config"
 )
 
 func main() {

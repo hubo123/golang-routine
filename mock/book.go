@@ -1,7 +1,7 @@
 package mock
 
 import (
-	"github.com/Away0x/7yue_api_server/model"
+	"jiudao/model"
 	"fmt"
 )
 

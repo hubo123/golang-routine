@@ -1,16 +1,15 @@
 package router
 
 import (
-	"github.com/Away0x/7yue_api_server/constant/errno"
-	_ "github.com/Away0x/7yue_api_server/docs"
-	"github.com/Away0x/7yue_api_server/handler"
-	"github.com/Away0x/7yue_api_server/handler/book"
-	"github.com/Away0x/7yue_api_server/handler/classic"
-	"github.com/Away0x/7yue_api_server/handler/learn"
-	"github.com/Away0x/7yue_api_server/handler/like"
-	"github.com/Away0x/7yue_api_server/handler/sd"
-	"github.com/Away0x/7yue_api_server/handler/user"
-	"github.com/Away0x/7yue_api_server/router/middleware"
+	"jiudao/constant/errno"
+	_ "jiudao/docs"
+	"jiudao/handler"
+	"jiudao/handler/book"
+	"jiudao/handler/classic"
+	"jiudao/handler/like"
+	"jiudao/handler/sd"
+	"jiudao/handler/user"
+	"jiudao/router/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
@@ -97,17 +96,8 @@ func Register(g *gin.Engine) *gin.Engine {
 			// 取消点赞
 			likeRouter.POST("/cancel", like.Cancel)
 		}
-
-		// 点赞
-		learnRouter := v1.Group("/learn")
-		learnRouter.Use(middleware.KeyAuth)
-		{
-			// 进行点赞
-			learnRouter.POST("", learn.Likes)
-			// 取消点赞
-			learnRouter.POST("/cancel", learn.Cancels)
-		}
 	}
+
 
 	return g
 }
