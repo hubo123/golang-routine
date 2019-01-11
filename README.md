@@ -1,4 +1,4 @@
-# 《旧岛小样》小程序的 api server
+# 《颂情》小程序的 api server
 ```bash
 # dev
 cd 7yue_api_server
@@ -19,3 +19,6 @@ make
 ![classic api](images/3.png)
 
 ![like and user api](images/4.png)
+
+//用户注册
+/v1/user/register

@@ -44,7 +44,7 @@ func Register(g *gin.Engine) *gin.Engine {
 		userRoute := v1.Group("/user")
 		{
 			userRoute.GET("", user.List)
-			userRoute.POST("", user.Register)
+			userRoute.POST("/register", user.Register)
 		}
 
 		// 期刊
