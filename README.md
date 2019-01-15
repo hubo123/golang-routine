@@ -20,5 +20,8 @@ make
 
 ![like and user api](images/4.png)
 
-//用户注册
+用户注册
 /v1/user/register
+
+获取点赞信息
+/favor/list/:type/:id

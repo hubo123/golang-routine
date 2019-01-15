@@ -60,7 +60,7 @@ func Register(g *gin.Engine) *gin.Engine {
 			// 获取当前一期的上一期
 			classicRouter.GET("/previous/:index", classic.Previous)
 			// 获取点赞信息
-			classicRouter.GET("/favor/:type/:id", classic.Like)
+			classicRouter.GET("/favor/list/:type/:id", classic.Like)
 			// 获取我喜欢的期刊
 			classicRouter.GET("/favor", classic.Favor)
 		}
