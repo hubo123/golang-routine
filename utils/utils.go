@@ -5,6 +5,7 @@ import (
 )
 
 func GetPath(c *gin.Context) string {
-	return "http://" + c.Request.Host
+	//"http://" + c.Request.Host
+	return "http://www.frontendgo.com:8886"
 }
 
