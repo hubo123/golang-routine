@@ -13,6 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"jiudao/handler/card"
 )
 
 func Register(g *gin.Engine) *gin.Engine {
@@ -95,6 +96,14 @@ func Register(g *gin.Engine) *gin.Engine {
 			likeRouter.POST("", like.Like)
 			// 取消点赞
 			likeRouter.POST("/cancel", like.Cancel)
+		}
+
+		// 发布卡片
+		cardRouter := v1.Group("/card")
+		cardRouter.Use(middleware.KeyAuth)
+		{
+			// 发布卡片
+			cardRouter.POST("/publish", card.PublishCard)
 		}
 	}
 

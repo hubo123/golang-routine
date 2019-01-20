@@ -28,7 +28,9 @@ func main() {
 		&model.BookComment{},
 		&model.Favor{},
 		&model.User{},
-		&model.HotKeyword{})
+		&model.HotKeyword{},
+		&model.Card{},
+	)
 	defer db.Close()
 
 	// 首次运行时可通过该方法添加一些 mock 数据
